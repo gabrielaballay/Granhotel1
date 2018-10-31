@@ -114,6 +114,7 @@ public class VistaHabitaciones extends javax.swing.JInternalFrame {
         chcLibre = new javax.swing.JCheckBox();
         chcOcupada = new javax.swing.JCheckBox();
         btnBorra = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
 
         setClosable(true);
 
@@ -201,6 +202,9 @@ public class VistaHabitaciones extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel6.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        jLabel6.setText("Seleccione una Habitacion....");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -243,6 +247,10 @@ public class VistaHabitaciones extends javax.swing.JInternalFrame {
                         .addGap(4, 4, 4)
                         .addComponent(jScrollPane1)))
                 .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel6)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -270,7 +278,9 @@ public class VistaHabitaciones extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(cbxTipoHabitacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -332,7 +342,7 @@ public class VistaHabitaciones extends javax.swing.JInternalFrame {
                     chcOcupada.setSelected(false);
                     cargaDatos("Estándar simple");
                     cbxTipoHabitacion.setSelectedIndex(0);
-            }else{JOptionPane.showMessageDialog(null, "Debe Selecccionar Un tipo de habitacion de la lista");}
+            }else{JOptionPane.showMessageDialog(null, "Debe Selecccionar una habitacion de la lista");}
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -444,6 +454,7 @@ public class VistaHabitaciones extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblTiposHabitaciones;

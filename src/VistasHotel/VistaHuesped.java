@@ -386,7 +386,7 @@ public class VistaHuesped extends javax.swing.JInternalFrame {
                 jtCorreo.setText(huesped.getCorreo());
                 jtCelular.setText(huesped.getCelular()+"");
                 id=huesped.getId_huesped();
-            }
+            }else{JOptionPane.showMessageDialog(null, "DNI no Encontrado...");}
         }
     }//GEN-LAST:event_jbBuscarActionPerformed
 
