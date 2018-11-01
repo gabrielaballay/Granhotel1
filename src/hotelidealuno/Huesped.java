@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package hotelidealuno;
 
 /**
@@ -10,13 +5,14 @@ package hotelidealuno;
  * @author Aballay Gabriel
  */
 public class Huesped {
+    //*****Declaracion de todos los atributos de la clase
     private int id_huesped=-1;
     private String nombre;
     private int dni;
     private String domicilio;
     private String correo;
     private long Celular;
-
+    //****Prmer constructor de la clase
     public Huesped(int id, String nombre, int dni, String domicilio, String correo, long Celular) {
         this.id_huesped = id;
         this.nombre = nombre;
@@ -25,7 +21,7 @@ public class Huesped {
         this.correo = correo;
         this.Celular = Celular;
     }
-
+    //*****Segundo constructor de la clase
     public Huesped(String nombre, int dni, String domicilio, String correo, long Celular) {
         id_huesped=-1;
         this.nombre = nombre;
@@ -34,12 +30,13 @@ public class Huesped {
         this.correo = correo;
         this.Celular = Celular;
     }
-
-
+    //*****Constructor por defecto
     public Huesped() {
         id_huesped=-1;
     }
-
+    /* A partir de este punto se declaran todos los metodos
+    ** Setters y Getters de la clase.-
+    */
     public int getId_huesped() {
         return id_huesped;
     }

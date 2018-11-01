@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package hotelidealuno;
 
 import java.sql.Connection;
@@ -16,9 +11,10 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Alumno
+ * @author Aballay Gabriel
  */
 public class HabitacionData {
+    //***Declaracion de variable tipo Connection
     private Connection connection = null;
 
     public HabitacionData(Conexion conexion) {
@@ -29,7 +25,8 @@ public class HabitacionData {
         }
     }
 
-    // GUARDA UNA HABITACION NUEVA EN LA BASE DE DATOS...
+    //****GUARDA UNA HABITACION NUEVA EN LA BASE DE DATOS****
+    //*******************************************************
     public void guardarHabitacion(Habitacion habitacion){
         try {
             
@@ -58,8 +55,8 @@ public class HabitacionData {
         }
     }
     
-    // LISTA TODOS LAS HABITACIONES EXISTENTES EN LA BASE DE DATOS (metodo no utilizado)
-    
+    //*****LISTA TODOS LAS HABITACIONES EXISTENTES EN LA BASE DE DATOS****
+    //********************************************************************
     public List<Habitacion> obtenerHabitaciones(){
         List<Habitacion> habitaciones = new ArrayList<Habitacion>();
         
@@ -81,13 +78,12 @@ public class HabitacionData {
             statement.close();
         } catch (SQLException ex) {
             System.out.println("Error al obtener las habitaciones: " + ex.getMessage());
-        }
-        
+        }    
         return habitaciones;
     }
     
-   
-    // ACTUALIZAR UNA HABITACION EXISTENTE EN LA BASE DE DATOS...
+    //****ACTUALIZAR UNA HABITACION EXISTENTE EN LA BASE DE DATOS****
+    //***************************************************************
     public void actualizarHabitacion(Habitacion habitacion){
     
         try {
@@ -108,11 +104,10 @@ public class HabitacionData {
         } catch (SQLException ex) {
             System.out.println("Error al actualizar una habitacion : " + ex.getMessage());
         }
-    
     }
     
-    // BUSCA UNA HABITACION EXISTENTE EN LA BASE DE DATOS...
- 
+    //****BUSCA UNA HABITACION EXISTENTE EN LA BASE DE DATOS****
+    //********************************************************** 
     public Habitacion buscarHabitacion(int nroHabitacion){
     Habitacion habitacion=null;
     try {
@@ -133,15 +128,15 @@ public class HabitacionData {
                 habitacion.setId_tipoHabitacion(resultSet.getInt("id_tipohabitacion"));
             }      
             statement.close();
-            
-            
+               
         } catch (SQLException ex) {
             System.out.println("Error al buscar una habitacion : " + ex.getMessage());
-        }
-        
+        }  
         return habitacion;
     }
-
+    
+    //****BORRA UNA HABITACION DE LA BASE DE DATOS*******
+    //***************************************************
     public void borrarHabitacion(int numero){
         try {
             
@@ -157,10 +152,10 @@ public class HabitacionData {
         } catch (SQLException ex) {
             System.out.println("Error al borrar una habitacion " + ex.getMessage());
         }
-    
     }
     
     //*****Busca un tipo de Habitacion por id*****
+    //********************************************
     public TipoHabitacion buscarTipoHabita(int id){
     TipoHabitacion tipoHabitacion=null;
     try {
@@ -188,10 +183,6 @@ public class HabitacionData {
         } catch (SQLException ex) {
             System.out.println("Error al buscar un tipoHabitacion : " + ex.getMessage());
         }
-        
         return tipoHabitacion;
     }
-   
 }
-
-

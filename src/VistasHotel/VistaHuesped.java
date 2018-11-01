@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package VistasHotel;
 
 import hotelidealuno.Conexion;
@@ -16,7 +11,6 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
  * @author Aballay Gabriel
  */
 public class VistaHuesped extends javax.swing.JInternalFrame {
@@ -35,6 +29,12 @@ public class VistaHuesped extends javax.swing.JInternalFrame {
     public VistaHuesped() {
         initComponents();
         try {
+            /**
+             * Creamos una instacia de la clase conexion y le pasamos la url de la base de datos
+             * a su vez creamos instancia de la clase huespedData y le pasamos la conexion.Creamos
+             * una instancia de nuestra tabla y llamamos a los metodo armaCabezeraTabla y cargaDatos
+             * 
+             */
             conexion=new Conexion("jdbc:mysql://localhost/hotelideal1","root","");
             huespedData=new HuespedData(conexion);
             modelo=new DefaultTableModel();
@@ -321,7 +321,6 @@ public class VistaHuesped extends javax.swing.JInternalFrame {
         }
     
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
-
         //**** TRASPASO DE VARIABLES BOTON GUARDAR
         nombre=jtNombre.getText();
         dni=Integer.parseInt(jtDni.getText());
@@ -342,7 +341,6 @@ public class VistaHuesped extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbGuardarActionPerformed
 
     private void jbActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbActualizarActionPerformed
-
         //**** TRASPASO DE VARIABLES BOTON ACTUALIZAR
         nombre=jtNombre.getText();
         dni=Integer.parseInt(jtDni.getText());
@@ -368,7 +366,6 @@ public class VistaHuesped extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbActualizarActionPerformed
 
     private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
-
         // se solicita un dni de un Huesped a buscar existente en la base de datos
         String dniBuscar=JOptionPane.showInputDialog("Ingrese DNI del Huesped");
         if(dniBuscar!=null){
@@ -422,13 +419,6 @@ public class VistaHuesped extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jHuespesAncestorMoved
 
     private void jHuespesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jHuespesMouseClicked
-        /*int cel=jHuespes.getSelectedRow();
-        jtNombre.setText(String.valueOf(jHuespes.getValueAt(cel, 0)));
-        jtDni.setText(String.valueOf(jHuespes.getValueAt(cel, 1)));
-        jtDireccion.setText(String.valueOf(jHuespes.getValueAt(cel, 2)));
-        jtCorreo.setText(String.valueOf(jHuespes.getValueAt(cel, 3)));
-        jtCelular.setText(String.valueOf(jHuespes.getValueAt(cel, 4)));
-        */
     }//GEN-LAST:event_jHuespesMouseClicked
 
     private void jtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtNombreActionPerformed
@@ -438,7 +428,6 @@ public class VistaHuesped extends javax.swing.JInternalFrame {
     private void jtDireccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtDireccionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtDireccionActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Button button1;

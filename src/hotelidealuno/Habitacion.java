@@ -1,21 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package hotelidealuno;
 
 /**
  *
- * @author Alumno
+ * @author Aballay Gabriel
  */
 public class Habitacion {
+    //*****Declaracion de los atributos de la clase
     private int idHabitacion=-1;
     private int nroHabitacion;
     private int piso;
     private boolean estado;
     private int id_tipoHabitacion;
-
+    //*****Constructor
     public Habitacion(int nroHabitacion,int piso, boolean estado, int id_tipoHabitacion) {
         idHabitacion=-1;
         this.nroHabitacion=nroHabitacion;
@@ -23,7 +19,7 @@ public class Habitacion {
         this.estado = estado;
         this.id_tipoHabitacion = id_tipoHabitacion;
     }
-
+    //******SEgundo constructor
     public Habitacion(int idHabitacion,int nroHabitacion, int piso, boolean estado, int id_tipoHabitacion) {
         this.idHabitacion = idHabitacion;
         this.nroHabitacion=nroHabitacion;
@@ -31,11 +27,13 @@ public class Habitacion {
         this.estado = estado;
         this.id_tipoHabitacion = id_tipoHabitacion;
     }
-
+    //********Constructor por Defecto
     public Habitacion() {
         idHabitacion=-1;
     }
-
+    /* A partir de este punto se declaran todos los metodos
+    ** Setters y Getters de la clase.-
+    */
     public int getIdHabitacion() {
         return idHabitacion;
     }

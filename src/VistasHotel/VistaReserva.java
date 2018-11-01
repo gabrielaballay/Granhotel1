@@ -19,7 +19,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 /**
- *
  * @author Aballay Gabriel
  */
 public class VistaReserva extends javax.swing.JInternalFrame {
@@ -41,7 +40,7 @@ public class VistaReserva extends javax.swing.JInternalFrame {
     private Conexion conexion;
     private int nroHabitacion;
 
-    /**1
+    /**
      * Creates new form VistaReserva
      */
     public VistaReserva() {
@@ -138,7 +137,7 @@ public class VistaReserva extends javax.swing.JInternalFrame {
         jLabel17.setText("Fecha de Salida");
 
         txtImporteTotal.setColumns(2);
-        txtImporteTotal.setEnabled(false);
+        txtImporteTotal.setEditable(false);
         txtImporteTotal.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         txtImporteTotal.setForeground(new java.awt.Color(0, 0, 102));
 
@@ -242,7 +241,8 @@ public class VistaReserva extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel3.setForeground(new java.awt.Color(0, 204, 0));
+        jLabel3.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(51, 51, 255));
         jLabel3.setText("Seleccione una Habitacion.....");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -392,7 +392,7 @@ public class VistaReserva extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtImporteTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE))
+                    .addComponent(txtImporteTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE))
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardarReserva)
@@ -464,12 +464,12 @@ public class VistaReserva extends javax.swing.JInternalFrame {
 
     private void btnBuscarHuespedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarHuespedActionPerformed
         VentanaDatosHuesped vdh=new VentanaDatosHuesped();
-        Principal.escritorio.add(vdh);
-        vdh.setLocation(450, 200);
-        vdh.toFront();
-        vdh.setVisible(true);
-        VentanaDatosHuesped.boton2.setVisible(true);
+        Principal.centrarVentana(vdh);
         VentanaDatosHuesped.boton1.setVisible(false);
+        VentanaDatosHuesped.btnBuscarFecha.setVisible(false);
+        VentanaDatosHuesped.buscarFecha.setVisible(false);
+        VentanaDatosHuesped.tituloBuscar.setVisible(false);
+        VentanaDatosHuesped.btnSeleccionarPorFecha.setVisible(false);
     }//GEN-LAST:event_btnBuscarHuespedActionPerformed
 
     private void cbxTipoHabitacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxTipoHabitacionActionPerformed
@@ -481,7 +481,6 @@ public class VistaReserva extends javax.swing.JInternalFrame {
         int valorspiner=(int)sprCantidad.getValue();
         for(TipoHabitacion m:listaTipoHabitaciones){
             for(Habitacion n:listaHabitaciones){
-                //System.out.println(n.isEstado());
                 if(tipo.equalsIgnoreCase(m.getTipo())&& valorspiner==m.getCantPersonasMax()
                         && n.isEstado()&& m.getId()==n.getId_tipoHabitacion()){
                     valor=1;
@@ -493,9 +492,8 @@ public class VistaReserva extends javax.swing.JInternalFrame {
             if(valor==1){
                 borrarFilasTabla();
                 cargaDatos(tipo);
-                JOptionPane.showMessageDialog(null, valor);
             }else{
-                JOptionPane.showMessageDialog(null, "No hay habitaciones Disponibles para esa cantidad de personas, pruebe otro valor");
+                JOptionPane.showMessageDialog(null, "No hay habitaciones "+tipo+" Disponibles para esa cantidad de personas","ATENCION!!!",JOptionPane.WARNING_MESSAGE);
                 cbxTipoHabitacion.setSelectedIndex(0);
                 borrarFilasTabla();
             }
@@ -530,7 +528,6 @@ public class VistaReserva extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnGuardarReservaActionPerformed
 
     private void txtFechaEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaEntradaActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_txtFechaEntradaActionPerformed
     private void tblTiposHabitacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTiposHabitacionesMouseClicked
     }//GEN-LAST:event_tblTiposHabitacionesMouseClicked
@@ -572,6 +569,7 @@ public class VistaReserva extends javax.swing.JInternalFrame {
         chcActiva.setSelected(false);
         chcInactiva.setSelected(false);
         cbxTipoHabitacion.setSelectedIndex(0);
+        txtImporteTotal.setText("");
         borrarFilasTabla();
    }
 
