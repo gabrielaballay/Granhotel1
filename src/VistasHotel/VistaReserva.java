@@ -183,6 +183,12 @@ public class VistaReserva extends javax.swing.JInternalFrame {
             }
         });
 
+        tblTiposHabitaciones =new javax.swing.JTable(){
+            public boolean isCellEditable(int rowIndex, int colIndes){
+                return false;
+            }
+        };
+        tblTiposHabitaciones.getTableHeader().setReorderingAllowed(false);
         tblTiposHabitaciones.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblTiposHabitacionesMouseClicked(evt);
@@ -407,11 +413,11 @@ public class VistaReserva extends javax.swing.JInternalFrame {
     public void cabezeraTabla(){
         ArrayList<Object> columnas=new ArrayList<>();
         
-        columnas.add("Codigo");
         columnas.add("Numero");
         columnas.add("Estado");
         columnas.add("Piso");
         columnas.add("Tipo Habitacion");
+        columnas.add("Codigo");
         columnas.add("Tipo Cama");
         columnas.add("Nro de Camas");
         columnas.add("Nro de Personas");
@@ -441,7 +447,7 @@ public class VistaReserva extends javax.swing.JInternalFrame {
                 for (Habitacion hab:listaHabitaciones){
                     if (hab.isEstado()){                
                         if (m.getId()==hab.getId_tipoHabitacion()&& m.getTipo().equalsIgnoreCase(tipo)&& m.getCantPersonasMax()==valorSpinner) {
-                                    modelo.addRow(new Object[]{m.getCodigo(),hab.getNroHabitacion(),"Libre",hab.getPiso(),m.getTipo(),m.getTipoCama(),m.getCantCamas(),m.getCantPersonasMax(),m.getPrecioPorNoche()});
+                                    modelo.addRow(new Object[]{hab.getNroHabitacion(),"Libre",hab.getPiso(),m.getTipo(),m.getCodigo(),m.getTipoCama(),m.getCantCamas(),m.getCantPersonasMax(),m.getPrecioPorNoche()});
                                     idHabitacion=hab.getIdHabitacion();
                         }
                     }
@@ -465,9 +471,9 @@ public class VistaReserva extends javax.swing.JInternalFrame {
     private void btnBuscarHuespedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarHuespedActionPerformed
         VentanaDatosHuesped vdh=new VentanaDatosHuesped();
         Principal.centrarVentana(vdh);
-        VentanaDatosHuesped.boton1.setVisible(false);
+        VentanaDatosHuesped.btnBuscarHuespedYFechas.setVisible(false);
         VentanaDatosHuesped.btnBuscarFecha.setVisible(false);
-        VentanaDatosHuesped.buscarFecha.setVisible(false);
+        VentanaDatosHuesped.txtBuscarFecha.setVisible(false);
         VentanaDatosHuesped.tituloBuscar.setVisible(false);
         VentanaDatosHuesped.btnSeleccionarPorFecha.setVisible(false);
     }//GEN-LAST:event_btnBuscarHuespedActionPerformed
@@ -519,7 +525,9 @@ public class VistaReserva extends javax.swing.JInternalFrame {
                 idHabitacion=ha.getIdHabitacion();
                 Reserva reserva=new Reserva(cantPersona,fechaEntrada,fechaSalida,impTotal,estadoReserva,idHabitacion,idHuesped);
                 reservaData.guardarReserva(reserva);
-                reservaData.actualizarEstado(idHabitacion, false);
+                int num=Integer.parseInt(String.valueOf(tblTiposHabitaciones.getValueAt(cel, 0)));
+                JOptionPane.showMessageDialog(null, num);
+                reservaData.actualizarEstado(false, num);
                 JOptionPane.showMessageDialog(null, "Se creo la reserva en forma correcta!");
                 limpiar();
             }else{JOptionPane.showMessageDialog(null, "Debe llenar todos los campos!!!");}
@@ -548,7 +556,7 @@ public class VistaReserva extends javax.swing.JInternalFrame {
             idHuesped=Integer.parseInt(txtId.getText());
             suma=fechaSalida.getDayOfYear()-fechaEntrada.getDayOfYear();
             impTotal=  (double) tblTiposHabitaciones.getValueAt(cel, 8)*suma;
-            nroHabitacion=(int) tblTiposHabitaciones.getValueAt(cel, 1);
+            nroHabitacion=(int) tblTiposHabitaciones.getValueAt(cel, 0);
             txtImporteTotal.setText(impTotal+"");
         }
     }//GEN-LAST:event_jButton1ActionPerformed

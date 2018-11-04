@@ -140,7 +140,7 @@ public class HabitacionData {
     public void borrarHabitacion(int numero){
         try {
             
-            String sql = "DELETE FROM habitacion WHERE nroHabitacion = ?;";
+            String sql = "DELETE FROM habitacion WHERE nroHabitacion nroHabitacion = ?;";
 
             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, numero);
@@ -185,4 +185,5 @@ public class HabitacionData {
         }
         return tipoHabitacion;
     }
+    
 }

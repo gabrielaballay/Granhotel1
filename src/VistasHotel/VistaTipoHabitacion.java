@@ -188,6 +188,11 @@ public class VistaTipoHabitacion extends javax.swing.JInternalFrame {
             }
         });
 
+        tblTiposHabitaciones=new javax.swing.JTable(){
+            public boolean isCellEditable(int rowIndex, int colIndes){
+                return false;
+            }
+        };
         tblTiposHabitaciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -199,6 +204,7 @@ public class VistaTipoHabitacion extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblTiposHabitaciones.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tblTiposHabitaciones);
 
         txtcodigo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));

@@ -61,15 +61,15 @@ public class ReservaData {
             System.out.println("Error al insertar un reserva : " + ex.getMessage());
         }
     }
-       public void actualizarEstado(int id, boolean estado){
     
+    public void actualizarEstado(boolean estado, int num){
         try {
             
-            String sql = "UPDATE habitacion SET estado = ? WHERE id_habitacion = ?;";
+            String sql = "UPDATE habitacion SET estado = ? WHERE nroHabitacion = ?;";
 
             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setBoolean(1, estado);
-            statement.setInt(2, id);
+            statement.setInt(2, num);
             statement.executeUpdate();
     
             statement.close();
@@ -82,8 +82,6 @@ public class ReservaData {
 
     public List<Reserva> obtenerResevas(){
         List<Reserva> reservas = new ArrayList<>();
-            
-
         try {
             String sql = "SELECT * FROM reserva;";
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -109,5 +107,21 @@ public class ReservaData {
         
         return reservas;
     }    
-   
+    
+    public void cancelarReserva(LocalDate numero){
+        try {
+            
+            String sql = "DELETE FROM reserva WHERE  fechaEntrada = ?;";
+
+            PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            statement.setDate(1, Date.valueOf(numero));
+                        
+            statement.executeUpdate();
+            
+            statement.close();
+    
+        } catch (SQLException ex) {
+            System.out.println("Error al borrar una habitacion " + ex.getMessage());
+        }
+    }
 }

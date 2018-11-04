@@ -137,7 +137,8 @@ public class VistaHuesped extends javax.swing.JInternalFrame {
 
         jLabel8.setText("ingrese sin puntos ej.: 32456789");
 
-        button1.setLabel("Cerrar");
+        button1.setActionCommand("Salir");
+        button1.setLabel("Salir");
         button1.setPreferredSize(new java.awt.Dimension(79, 24));
         button1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -145,6 +146,11 @@ public class VistaHuesped extends javax.swing.JInternalFrame {
             }
         });
 
+        jHuespes =new javax.swing.JTable(){
+            public boolean isCellEditable(int rowIndex, int colIndes){
+                return false;
+            }
+        };
         jHuespes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -156,6 +162,7 @@ public class VistaHuesped extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jHuespes.getTableHeader().setReorderingAllowed(false);
         jHuespes.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
                 jHuespesAncestorMoved(evt);
