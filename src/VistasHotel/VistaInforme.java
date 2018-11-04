@@ -1,26 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package VistasHotel;
     
-import hotelidealuno.Conexion;
-import hotelidealuno.Habitacion;
-import hotelidealuno.HabitacionData;
-import hotelidealuno.Huesped;
-import hotelidealuno.HuespedData;
-import hotelidealuno.Reserva;
-import hotelidealuno.ReservaData;
-import hotelidealuno.TipoHabitacion;
-import hotelidealuno.TipoHabitacionData;
+import hotelidealuno.ModelaTabla;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -28,14 +13,14 @@ import javax.swing.table.DefaultTableModel;
  * @author Usuario
  */
 public class VistaInforme extends javax.swing.JInternalFrame {
-    public static DefaultTableModel modelar;
+    public static DefaultTableModel model;
 
     /** Creates new form VistaInforme */
     public VistaInforme() {
-        modelar=new DefaultTableModel();
-            initComponents();
-            tituloTabla();
-            limpiarTabla();
+        initComponents();
+        model=new DefaultTableModel();
+        tituloTabla();
+        limpiarTabla();
     }
 
     //****** Metodo que arma la cabezera de la tabla*******
@@ -55,17 +40,19 @@ public class VistaInforme extends javax.swing.JInternalFrame {
         columnas.add("Precio x Noche");
         
         for (Object it:columnas){
-            modelar.addColumn(it);
+            model.addColumn(it);
         }
-        tablaInforme.setModel(modelar);
+        tablaInforme.setModel(model);
+        ModelaTabla mt=new ModelaTabla();
+        mt.modelaInforme(tablaInforme);
     }
         
     //******Metodo que borra las filas de la tabla******
     //**************************************************
     public void limpiarTabla(){
-        int a =modelar.getRowCount()-1;
+        int a =model.getRowCount()-1;
         for(int i=a;i>=0;i--){
-            modelar.removeRow(i);
+            model.removeRow(i);
         }
     }
 
@@ -123,6 +110,7 @@ public class VistaInforme extends javax.swing.JInternalFrame {
             }
         ));
         tablaInforme.setFocusable(false);
+        tablaInforme.getTableHeader().setResizingAllowed(false);
         tablaInforme.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tablaInforme);
         if (tablaInforme.getColumnModel().getColumnCount() > 0) {
@@ -135,28 +123,31 @@ public class VistaInforme extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(335, 335, 335)
+                .addContainerGap()
+                .addComponent(jScrollPane2)
+                .addGap(14, 14, 14))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(368, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(161, 161, 161)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(438, Short.MAX_VALUE))
-            .addComponent(jScrollPane2)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(141, 141, 141))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
-                .addGap(30, 30, 30))
+                .addGap(17, 17, 17))
         );
 
         pack();

@@ -6,6 +6,7 @@
 package VistasHotel;
 
 import hotelidealuno.Conexion;
+import hotelidealuno.ModelaTabla;
 import hotelidealuno.TipoHabitacion;
 import hotelidealuno.TipoHabitacionData;
 import java.util.ArrayList;
@@ -65,7 +66,9 @@ public class VistaTipoHabitacion extends javax.swing.JInternalFrame {
             modelo.addColumn(it);
         }
         tblTiposHabitaciones.setModel(modelo);
-        }
+        ModelaTabla mt=new ModelaTabla();
+        mt.modelaHabitacion(tblTiposHabitaciones);
+    }
         
         //******Metodo que borra las filas de la tabla******
         public void borrarFilasTabla(){
@@ -259,10 +262,10 @@ public class VistaTipoHabitacion extends javax.swing.JInternalFrame {
                         .addGap(80, 80, 80)
                         .addComponent(btnactualizar)
                         .addGap(48, 48, 48))))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 673, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(48, 48, 48))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

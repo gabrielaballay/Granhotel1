@@ -3,16 +3,13 @@ package VistasHotel;
 import hotelidealuno.Conexion;
 import hotelidealuno.Habitacion;
 import hotelidealuno.HabitacionData;
-import hotelidealuno.Reserva;
+import hotelidealuno.ModelaTabla;
 import hotelidealuno.TipoHabitacion;
 import hotelidealuno.TipoHabitacionData;
 import java.beans.PropertyVetoException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -62,9 +59,9 @@ public class VentanaHabitaciones extends javax.swing.JInternalFrame {
             modelo.addColumn(it);
         }
         tablaHabitaciones.setModel(modelo);
-        //tablaHabitaciones.
-        //tablaHabitaciones.sizeColumnsToFit(80);
-        }
+        ModelaTabla tbl=new ModelaTabla();
+        tbl.modela(tablaHabitaciones);
+    }
     
         //******Metodo que borra las filas de la tabla******
         public void borrarFilasTabla(){
@@ -152,7 +149,7 @@ public class VentanaHabitaciones extends javax.swing.JInternalFrame {
             tablaHabitaciones.getColumnModel().getColumn(8).setMaxWidth(110);
         }
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 49, 897, 300));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 49, 780, 300));
 
         jButton1.setText("Cerrar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -160,13 +157,13 @@ public class VentanaHabitaciones extends javax.swing.JInternalFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(406, 11, 113, -1));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 10, 113, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 808, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

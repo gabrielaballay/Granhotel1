@@ -320,7 +320,7 @@ public class VentanaDatosHuesped extends javax.swing.JInternalFrame {
                             if (hab.isEstado()){
                                 estado="  Libre  \t";
                             }else{estado="  Ocupada\t";}
-                            VistaInforme.modelar.addRow(new Object[]{hab.getNroHabitacion(),"Ocupado",hab.getPiso()
+                            VistaInforme.model.addRow(new Object[]{hab.getNroHabitacion(),"Ocupado",hab.getPiso()
                                 ,th.getTipo(),th.getCodigo(),th.getTipoCama(),th.getCantCamas(),th.getCantPersonasMax(),r.getFechaEntrada(),r.getFechaSalida(),th.getPrecioPorNoche()});
     
                             /*String piso=hab.getPiso()+"\t"+th.getTipo()+"\t";

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package hotelidealuno;
 
 import java.sql.Connection;
@@ -17,7 +12,7 @@ import java.util.List;
 
 /**
  *
- * @author asus
+ * @author Aballay Gabriel
  */
 public class ReservaData {
    private Connection connection = null;
@@ -102,9 +97,8 @@ public class ReservaData {
             }      
             statement.close();
         } catch (SQLException ex) {
-            System.out.println("Error al obtener los huesped: " + ex.getMessage());
+            System.out.println("Error al obtener las Reservas: " + ex.getMessage());
         }
-        
         return reservas;
     }    
     
@@ -121,7 +115,32 @@ public class ReservaData {
             statement.close();
     
         } catch (SQLException ex) {
-            System.out.println("Error al borrar una habitacion " + ex.getMessage());
+            System.out.println("Error al canelar una Reserva " + ex.getMessage());
+        }
+    }
+    
+    public void actualizaReserva(Reserva reserva){
+    
+        try {
+            
+            String sql = "UPDATE reserva SET cantidadPersonas = ? , fechaEntrada = ?, fechaSalida = ? , importeTotal = ?, estadoReserva = ? ,"
+                    + " id_habitacion = ? , id_huesped = ? WHERE id_reserva = ?;";
+
+            PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            statement.setInt(1, reserva.getCantidadPersonas());
+            statement.setDate(2, Date.valueOf(reserva.getFechaEntrada()));
+            statement.setDate(3, Date.valueOf(reserva.getFechaSalida()));
+            statement.setDouble(4, reserva.getImporteTotal());
+            statement.setBoolean(5, reserva.getEstadoReserva()); 
+            statement.setInt (6, reserva.getId_habitacion());
+            statement.setInt (7, reserva.getId_huesped());
+            statement.setInt(8, reserva.getId());
+            statement.executeUpdate();
+            
+            statement.close();
+    
+        } catch (SQLException ex) {
+            System.out.println("Error al insertar un reserva : " + ex.getMessage());
         }
     }
 }
