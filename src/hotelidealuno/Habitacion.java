@@ -10,23 +10,30 @@ public class Habitacion {
     private int nroHabitacion;
     private int piso;
     private boolean estado;
-    private int id_tipoHabitacion;
+    private TipoHabitacion id_tipoHabitacion;
     //*****Constructor
-    public Habitacion(int nroHabitacion,int piso, boolean estado, int id_tipoHabitacion) {
+
+    public Habitacion(int nroHabitacion, int piso, boolean estado, TipoHabitacion id_tipoHabitacion) {
         idHabitacion=-1;
-        this.nroHabitacion=nroHabitacion;
+        this.nroHabitacion = nroHabitacion;
         this.piso = piso;
         this.estado = estado;
         this.id_tipoHabitacion = id_tipoHabitacion;
     }
+    
     //******SEgundo constructor
-    public Habitacion(int idHabitacion,int nroHabitacion, int piso, boolean estado, int id_tipoHabitacion) {
-        this.idHabitacion = idHabitacion;
-        this.nroHabitacion=nroHabitacion;
+    public Habitacion(int idHabitacion, int nroHabitacion, int piso, boolean estado, TipoHabitacion id_tipoHabitacion) {    
+        this.idHabitacion=idHabitacion;
+        this.nroHabitacion = nroHabitacion;
         this.piso = piso;
         this.estado = estado;
         this.id_tipoHabitacion = id_tipoHabitacion;
     }
+
+    public Habitacion(int idHabitacion) {
+        this.idHabitacion = idHabitacion;
+    }
+
     //********Constructor por Defecto
     public Habitacion() {
         idHabitacion=-1;
@@ -34,6 +41,7 @@ public class Habitacion {
     /* A partir de este punto se declaran todos los metodos
     ** Setters y Getters de la clase.-
     */
+
     public int getIdHabitacion() {
         return idHabitacion;
     }
@@ -50,7 +58,6 @@ public class Habitacion {
         this.nroHabitacion = nroHabitacion;
     }
 
-    
     public int getPiso() {
         return piso;
     }
@@ -67,13 +74,12 @@ public class Habitacion {
         this.estado = estado;
     }
 
-    public int getId_tipoHabitacion() {
+    public TipoHabitacion getId_tipoHabitacion() {
         return id_tipoHabitacion;
     }
 
-    public void setId_tipoHabitacion(int id_tipoHabitacion) {
+    public void setId_tipoHabitacion(TipoHabitacion id_tipoHabitacion) {
         this.id_tipoHabitacion = id_tipoHabitacion;
     }
-
     
 }

@@ -1,14 +1,10 @@
 package VistasHotel;
 
 import hotelidealuno.Conexion;
-import hotelidealuno.Habitacion;
-import hotelidealuno.HabitacionData;
 import hotelidealuno.Huesped;
 import hotelidealuno.HuespedData;
 import hotelidealuno.Reserva;
 import hotelidealuno.ReservaData;
-import hotelidealuno.TipoHabitacion;
-import hotelidealuno.TipoHabitacionData;
 import java.beans.PropertyVetoException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -25,18 +21,14 @@ import javax.swing.table.DefaultTableModel;
  * @author Aballay Gabriel
  */
 public class VentanaDatosHuesped extends javax.swing.JInternalFrame {
+    private LocalDate fecha;
     private HuespedData huespedData;
-    private HabitacionData habitacionData;
-    private TipoHabitacionData tipoHabitacionData;
     private ReservaData reservaData;
+    private Huesped huesped;
     private Conexion conexion;
     private ArrayList<Huesped> listaHuespedes;
-    private ArrayList<Habitacion> listaHabitaciones;
-    private ArrayList<TipoHabitacion> listaTipoHab;
     private ArrayList<Reserva> listaReservas;
-    private Huesped huesped;
     private DefaultTableModel modelo;
-    private LocalDate fecha;
 
     
     public VentanaDatosHuesped() {
@@ -45,13 +37,9 @@ public class VentanaDatosHuesped extends javax.swing.JInternalFrame {
             conexion=new Conexion("jdbc:mysql://localhost/hotelideal1","root","");
             huespedData=new HuespedData(conexion);
             reservaData=new ReservaData(conexion);
-            habitacionData=new HabitacionData(conexion);
-            tipoHabitacionData=new TipoHabitacionData(conexion);
             modelo=new DefaultTableModel();
             listaHuespedes=(ArrayList)huespedData.obtenerHuespedes();
             listaReservas=(ArrayList)reservaData.obtenerResevas();
-            listaHabitaciones=(ArrayList)habitacionData.obtenerHabitaciones();
-            listaTipoHab=(ArrayList)tipoHabitacionData.obtenerTipoHabitaciones();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(VentanaDatosHuesped.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -85,7 +73,8 @@ public class VentanaDatosHuesped extends javax.swing.JInternalFrame {
     public void cargaDatos(){
         borraFilasTabla();
         for (Huesped m:listaHuespedes){
-            modelo.addRow(new Object[]{m.getNombre(),m.getDni(),m.getDomicilio(),m.getCorreo(),m.getCelular(),m.getId_huesped()});
+            modelo.addRow(new Object[]{m.getNombre(),m.getDni(),m.getDomicilio(),m.getCorreo(),
+                m.getCelular(),m.getId_huesped()});
         }
     }
     @SuppressWarnings("unchecked")
@@ -105,7 +94,6 @@ public class VentanaDatosHuesped extends javax.swing.JInternalFrame {
 
         setBackground(new java.awt.Color(0, 153, 153));
         setClosable(true);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         datos =new javax.swing.JTable(){
             public boolean isCellEditable(int rowIndex, int colIndes){
@@ -126,8 +114,6 @@ public class VentanaDatosHuesped extends javax.swing.JInternalFrame {
         datos.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(datos);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 104, 743, 194));
-
         btnBuscarHuesped.setText("Seleccionar");
         btnBuscarHuesped.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
         btnBuscarHuesped.addActionListener(new java.awt.event.ActionListener() {
@@ -135,7 +121,6 @@ public class VentanaDatosHuesped extends javax.swing.JInternalFrame {
                 btnBuscarHuespedActionPerformed(evt);
             }
         });
-        getContentPane().add(btnBuscarHuesped, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 60, 100, 30));
 
         btnBuscarHuespedYFechas.setText("Seleccionar");
         btnBuscarHuespedYFechas.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
@@ -144,17 +129,14 @@ public class VentanaDatosHuesped extends javax.swing.JInternalFrame {
                 btnBuscarHuespedYFechasActionPerformed(evt);
             }
         });
-        getContentPane().add(btnBuscarHuespedYFechas, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 60, 97, 30));
 
         try {
             txtBuscarFecha.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        getContentPane().add(txtBuscarFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(344, 5, 106, -1));
 
         tituloBuscar.setText("Ingrese La Fecha");
-        getContentPane().add(tituloBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(222, 8, 103, -1));
 
         btnBuscarFecha.setText("Buscar");
         btnBuscarFecha.addActionListener(new java.awt.event.ActionListener() {
@@ -162,12 +144,10 @@ public class VentanaDatosHuesped extends javax.swing.JInternalFrame {
                 btnBuscarFechaActionPerformed(evt);
             }
         });
-        getContentPane().add(btnBuscarFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(344, 31, 106, -1));
 
         etiquetaSeleccione.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         etiquetaSeleccione.setForeground(new java.awt.Color(255, 0, 0));
         etiquetaSeleccione.setText("Seleccione un Huesped...");
-        getContentPane().add(etiquetaSeleccione, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 79, 147, -1));
 
         btnSeleccionarPorFecha.setText("Seleccionar");
         btnSeleccionarPorFecha.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
@@ -176,7 +156,6 @@ public class VentanaDatosHuesped extends javax.swing.JInternalFrame {
                 btnSeleccionarPorFechaActionPerformed(evt);
             }
         });
-        getContentPane().add(btnSeleccionarPorFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 60, 100, 30));
 
         buscarInforme.setFont(new java.awt.Font("Times New Roman", 1, 11)); // NOI18N
         buscarInforme.setText("Seleccionar");
@@ -186,7 +165,51 @@ public class VentanaDatosHuesped extends javax.swing.JInternalFrame {
                 buscarInformeActionPerformed(evt);
             }
         });
-        getContentPane().add(buscarInforme, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 60, 100, 30));
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(210, 210, 210)
+                .addComponent(tituloBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(17, 17, 17)
+                .addComponent(txtBuscarFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(230, 230, 230)
+                .addComponent(btnBuscarFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(114, 114, 114)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(buscarInforme, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscarHuespedYFechas, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSeleccionarPorFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscarHuesped, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(etiquetaSeleccione, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 743, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tituloBuscar)
+                    .addComponent(txtBuscarFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnBuscarFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buscarInforme, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscarHuespedYFechas, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSeleccionarPorFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscarHuesped, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addComponent(etiquetaSeleccione)
+                .addGap(5, 5, 5)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         getAccessibleContext().setAccessibleDescription("VantanaDatosHuesped");
 
@@ -271,14 +294,15 @@ public class VentanaDatosHuesped extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_buscarInformeActionPerformed
 
     public void cargaDatosFechas(){
+        listaReservas=(ArrayList)reservaData.obtenerResevas();
         borraFilasTabla();
         LocalDate estaFecha=LocalDate.parse((CharSequence)txtBuscarFecha.getValue(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        for (Huesped m:listaHuespedes){
-            for (Reserva r:listaReservas){
-                if (estaFecha.equals(r.getFechaEntrada())&& m.getId_huesped()==r.getId_huesped()){
-                    modelo.addRow(new Object[]{m.getNombre(),m.getDni(),m.getDomicilio(),m.getCorreo(),m.getCelular(),m.getId_huesped()});
-                    fecha=r.getFechaEntrada();
-                }
+        for (Reserva r:listaReservas){
+            if (estaFecha.equals(r.getFechaEntrada())){
+                modelo.addRow(new Object[]{r.getHuesped().getNombre(),r.getHuesped().getDni(),
+                    r.getHuesped().getDomicilio(),r.getHuesped().getCorreo(),r.getHuesped().getCelular(),
+                    r.getHuesped().getId_huesped()});
+                fecha=r.getFechaEntrada();
             }
         }
     }
@@ -296,7 +320,7 @@ public class VentanaDatosHuesped extends javax.swing.JInternalFrame {
                 VistaGestionReserva.modelofecha.removeRow(i);
             }
             for(Reserva r:listaReservas){
-                if (idhues==r.getId_huesped()) {
+                if (idhues==r.getHuesped().getId_huesped()) {
                     VistaGestionReserva.modelofecha.addRow(new Object[]{r.getFechaEntrada()});
                 }
             }
@@ -304,40 +328,27 @@ public class VentanaDatosHuesped extends javax.swing.JInternalFrame {
     }
 
     public void cargarInforme(int deneis){
-        String habi="";
-        for (Huesped h:listaHuespedes){
-            for(Reserva r:listaReservas){
-                for(Habitacion hab:listaHabitaciones){
-                    for (TipoHabitacion th:listaTipoHab){
-                        if (deneis==h.getDni()&&r.getId_huesped()==h.getId_huesped()&&r.getId_habitacion()==hab.getIdHabitacion()&&hab.getId_tipoHabitacion()==th.getId()){
-                            String estado;
-                            String nombre="Nombre y Apellido : "+h.getNombre()+"\n";
-                            String direccion="Drirecion\t     : "+h.getDomicilio()+"\n";
-                            String correo="Correo\t     : "+h.getCorreo()+"\n";
-                            String dni="DNI\t     : "+h.getDni()+"\n";
-                            String celular="Celular\t     : "+h.getCelular()+"\n\n\n";
-                            String NroHab=hab.getNroHabitacion()+"  \t";
-                            if (hab.isEstado()){
-                                estado="  Libre  \t";
-                            }else{estado="  Ocupada\t";}
-                            VistaInforme.model.addRow(new Object[]{hab.getNroHabitacion(),"Ocupado",hab.getPiso()
-                                ,th.getTipo(),th.getCodigo(),th.getTipoCama(),th.getCantCamas(),th.getCantPersonasMax(),r.getFechaEntrada(),r.getFechaSalida(),th.getPrecioPorNoche()});
-    
-                            /*String piso=hab.getPiso()+"\t"+th.getTipo()+"\t";
-                            String codigo=th.getCodigo()+"\t"+th.getTipoCama()+"\t";
-                            String nrocam=th.getCantCamas()+"\t   "+th.getCantPersonasMax()+"   \t   ";
-                            String fecEnt=r.getFechaEntrada()+"    \t";
-                            String fecSal="        "+r.getFechaSalida()+"\t";
-                            String precio=th.getPrecioPorNoche()+"\n\n";*/
-                            //habi=habi+NroHab+estado+piso+codigo+nrocam+fecEnt+fecSal+precio;
-                            String camposHuesped=nombre+direccion+correo+dni+celular+habi;
-                            VistaInforme.textArea.setText(camposHuesped);
-                        }
-                    }
-                }
+        for(Reserva r:listaReservas){
+            if (deneis==r.getHuesped().getDni()){
+                String estado;
+                String nombre="Nombre y Apellido : "+r.getHuesped().getNombre()+"\n";
+                String direccion="Drirecion\t     : "+r.getHuesped().getDomicilio()+"\n";
+                String correo="Correo\t     : "+r.getHuesped().getCorreo()+"\n";
+                String dni="DNI\t     : "+r.getHuesped().getDni()+"\n";
+                String celular="Celular\t     : "+r.getHuesped().getCelular()+"\n";
+                if (r.getHabitacio().isEstado()){
+                    estado="  Libre  \t";
+                }else{estado="  Ocupada\t";}
+                VistaInforme.model.addRow(new Object[]{r.getFechaReserva(),r.getHabitacio().getNroHabitacion(),"Ocupado",
+                    r.getHabitacio().getPiso(),r.getHabitacio().getId_tipoHabitacion().getTipo(),
+                    r.getHabitacio().getId_tipoHabitacion().getCodigo(),r.getHabitacio().getId_tipoHabitacion().getTipoCama(),
+                    r.getHabitacio().getId_tipoHabitacion().getCantCamas(),r.getHabitacio().getId_tipoHabitacion().getCantPersonasMax(),
+                    r.getFechaEntrada(),r.getFechaSalida(),r.getHabitacio().getId_tipoHabitacion().getPrecioPorNoche()});
+
+                String camposHuesped=nombre+direccion+correo+dni+celular;
+                VistaInforme.textArea.setText(camposHuesped);
             }
         }
-    
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -345,7 +356,7 @@ public class VentanaDatosHuesped extends javax.swing.JInternalFrame {
     public static javax.swing.JButton btnBuscarHuesped;
     public static javax.swing.JButton btnBuscarHuespedYFechas;
     public static javax.swing.JButton btnSeleccionarPorFecha;
-    private javax.swing.JButton buscarInforme;
+    public static javax.swing.JButton buscarInforme;
     public static javax.swing.JTable datos;
     public static javax.swing.JLabel etiquetaSeleccione;
     private javax.swing.JScrollPane jScrollPane1;

@@ -10,7 +10,7 @@ package hotelidealuno;
  * @author okped
  */
 public class TipoHabitacion {
-    private int id=-1;
+    private int id_tipoHabitacion=-1;
     private int codigo;
     private String tipo;
     private Double precioPorNoche;
@@ -28,13 +28,17 @@ public class TipoHabitacion {
     }
 
     public TipoHabitacion(int id, int codigo, String tipo, Double precioPorNoche, int cantPersonasMax, int cantCamas, String tipoCama) {
-        this.id = id;
+        this.id_tipoHabitacion = id;
         this.codigo = codigo;
         this.tipo = tipo;
         this.precioPorNoche = precioPorNoche;
         this.cantPersonasMax = cantPersonasMax;
         this.cantCamas = cantCamas;
         this.tipoCama = tipoCama;
+    }
+
+    public TipoHabitacion(int id_tipoHabitacion) {
+        this.id_tipoHabitacion = id_tipoHabitacion;
     }
     
 
@@ -50,12 +54,12 @@ public class TipoHabitacion {
     
     
 
-    public int getId() {
-        return id;
+    public int getId_tipoHabitacion() {
+        return id_tipoHabitacion;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId_tipoHabitacion(int id) {
+        this.id_tipoHabitacion = id;
     }
 
     

@@ -16,9 +16,11 @@ import java.util.List;
  */
 public class ReservaData {
    private Connection connection = null;
+   private Conexion conexion;
 
     public ReservaData(Conexion conexion) {
         try {
+            this.conexion=conexion;
             connection = conexion.getConexion();
         } catch (SQLException ex) {
             System.out.println("Error al abrir al obtener la conexion");
@@ -30,7 +32,7 @@ public class ReservaData {
         try {
             
             String sql = "INSERT INTO reserva ( cantidadPersonas , fechaEntrada , fechaSalida , importeTotal , estadoReserva ,"
-                    + " id_habitacion , id_huesped ) VALUES ( ? , ? , ? , ? , ? , ? , ? );";
+                    + "fechaReserva, id_habitacion , id_huesped ) VALUES ( ? , ? , ? , ? , ? , ? , ? , ? );";
 
             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, reserva.getCantidadPersonas());
@@ -38,15 +40,16 @@ public class ReservaData {
             statement.setDate(3, Date.valueOf(reserva.getFechaSalida()));
             statement.setDouble(4, reserva.getImporteTotal());
             statement.setBoolean(5, reserva.getEstadoReserva()); 
-            statement.setInt (6, reserva.getId_habitacion());
-            statement.setInt (7, reserva.getId_huesped());
+            statement.setDate(6, Date.valueOf(reserva.getFechaReserva()));
+            statement.setInt (7, reserva.getHabitacio().getIdHabitacion());
+            statement.setInt (8, reserva.getHuesped().getId_huesped());
             
             statement.executeUpdate();
             
             ResultSet rs = statement.getGeneratedKeys();
 
             if (rs.next()) {
-                reserva.setId(rs.getInt(1));
+                reserva.setId_Reseva(rs.getInt(1));
             } else {
                 System.out.println("No se pudo obtener el id luego de insertar un reserva");
             }
@@ -84,14 +87,19 @@ public class ReservaData {
             Reserva reserva;
             while(resultSet.next()){
                 reserva = new Reserva();
-                reserva.setId(resultSet.getInt("id_reserva")); 
+                reserva.setId_Reseva(resultSet.getInt("id_reserva")); 
                 reserva.setCantidadPersonas(resultSet.getInt("cantidadPersonas"));
                 reserva.setFechaEntrada(resultSet.getDate("fechaEntrada").toLocalDate());
                 reserva.setFechaSalida(resultSet.getDate("fechaSalida").toLocalDate());
                 reserva.setImporteTotal(resultSet.getDouble("importeTotal"));
                 reserva.setEstadoReserva(resultSet.getBoolean("estadoReserva"));
-                reserva.setId_habitacion(resultSet.getInt("id_habitacion"));
-                reserva.setId_huesped(resultSet.getInt("id_huesped"));
+                reserva.setFechaReserva(resultSet.getDate("fechaReserva").toLocalDate());
+                
+                Habitacion hab=buscarHabitacion(resultSet.getInt("id_habitacion"));
+                Huesped hus=buscarHuesped(resultSet.getInt("id_huesped"));
+                
+                reserva.setHabitacio(hab);
+                reserva.setHuesped(hus);
     
                 reservas.add(reserva);
             }      
@@ -132,9 +140,9 @@ public class ReservaData {
             statement.setDate(3, Date.valueOf(reserva.getFechaSalida()));
             statement.setDouble(4, reserva.getImporteTotal());
             statement.setBoolean(5, reserva.getEstadoReserva()); 
-            statement.setInt (6, reserva.getId_habitacion());
-            statement.setInt (7, reserva.getId_huesped());
-            statement.setInt(8, reserva.getId());
+            statement.setInt (6, reserva.getHabitacio().getIdHabitacion());
+            statement.setInt (7, reserva.getHuesped().getId_huesped());
+            statement.setInt(8, reserva.getId_Reseva());
             statement.executeUpdate();
             
             statement.close();
@@ -143,4 +151,26 @@ public class ReservaData {
             System.out.println("Error al insertar un reserva : " + ex.getMessage());
         }
     }
+    
+    
+    public Habitacion buscarHabitacion(int id){
+            
+        HabitacionData hd=new HabitacionData(conexion);
+        
+        return hd.buscarIdHabitacion(id);
+        
+    }
+    
+    public Huesped buscarHuesped(int id){
+            
+        HuespedData hud=new HuespedData(conexion);
+        
+        return hud.buscarIdHuesped(id);
+        
+    }
+    
+    
+    
+    
+    
 }

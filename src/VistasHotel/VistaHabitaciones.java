@@ -80,7 +80,7 @@ public class VistaHabitaciones extends javax.swing.JInternalFrame {
             borrarFilasTabla();
             for (TipoHabitacion m:listaTipoHabitaciones){
                 if (m.getTipo().equalsIgnoreCase(tipo)){
-                    modelo.addRow(new Object[]{m.getId(),m.getCodigo(),m.getTipo(),m.getTipoCama(),m.getCantCamas(),m.getCantPersonasMax(),m.getPrecioPorNoche()});
+                    modelo.addRow(new Object[]{m.getId_tipoHabitacion(),m.getCodigo(),m.getTipo(),m.getTipoCama(),m.getCantCamas(),m.getCantPersonasMax(),m.getPrecioPorNoche()});
                 }
             }
         }
@@ -325,22 +325,21 @@ public class VistaHabitaciones extends javax.swing.JInternalFrame {
     
     //************Metodo del Boton Guardar*************
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        TipoHabitacion th;
         int cel=tblTiposHabitaciones.getSelectedRow();
         //********Consulta que los campos contegan algun valor
         if (txtNroHabitacion.getText().equals("")||txtPiso.getText().equals("")){
             JOptionPane.showMessageDialog(null, "Debe llenar todos los campos");
-            btnGuardar.setSelected(false);
         }else{
-
             if (cel!=-1){ //*****Consulta almenos una fila de la tabla este seleccionada*********
                 if (chcLibre.isSelected()){
                     estado=true;
                 }else{estado=false;}
-                
+                id_tipoHabitacion=(int) tblTiposHabitaciones.getValueAt(cel, 0);
+                th=new TipoHabitacion(id_tipoHabitacion);
                 nroHabitacion=Integer.parseInt(txtNroHabitacion.getText());
                 piso=Integer.parseInt(txtPiso.getText());
-                id_tipoHabitacion=(int) tblTiposHabitaciones.getValueAt(cel, 0);
-                Habitacion habitacion=new Habitacion(nroHabitacion,piso,estado,id_tipoHabitacion);
+                Habitacion habitacion=new Habitacion(nroHabitacion,piso,estado,th);
                 habitacionData.guardarHabitacion(habitacion);
                 
                 JOptionPane.showMessageDialog(rootPane, "La Habitacion Nro "+nroHabitacion+" se Guardo Correctamente");
@@ -373,24 +372,25 @@ public class VistaHabitaciones extends javax.swing.JInternalFrame {
         String buscarHab=JOptionPane.showInputDialog("Ingrese Nro valido de Habitacion a buscar");
         if (buscarHab!=null){
             int busca=Integer.parseInt(buscarHab);
-            Habitacion habitacion=habitacionData.buscarHabitacion(busca);
+            Habitacion ha=habitacionData.buscarHabitacion(busca);
             //*******Consulta que habitacion sea diferente de null para asegurar que devuelva la habiacion deseada
-            if(habitacion!=null){
-                txtNroHabitacion.setText(habitacion.getNroHabitacion()+"");
-                if(habitacion.isEstado()){
+            if(ha!=null){
+                txtNroHabitacion.setText(ha.getNroHabitacion()+"");
+                if(ha.isEstado()){
                     chcLibre.setSelected(true);
                     chcOcupada.setSelected(false);
                 }else{
                     chcOcupada.setSelected(true);
                     chcLibre.setSelected(false);
                 }
-                txtPiso.setText(habitacion.getPiso()+"");
-                idHabitacion=habitacion.getIdHabitacion();
-                TipoHabitacion t=habitacionData.buscarTipoHabita(habitacion.getId_tipoHabitacion());
-                String tipo=t.getTipo();
+                txtPiso.setText(ha.getPiso()+"");
+                idHabitacion=ha.getIdHabitacion();
+                String tipo=ha.getId_tipoHabitacion().getTipo();
                 cbxTipoHabitacion.setSelectedItem(tipo);
                 borrarFilasTabla();
-                modelo.addRow(new Object[]{t.getId(),t.getCodigo(),t.getTipo(),t.getTipoCama(),t.getCantCamas(),t.getCantPersonasMax(),t.getPrecioPorNoche()});
+                modelo.addRow(new Object[]{ha.getId_tipoHabitacion().getId_tipoHabitacion(),ha.getId_tipoHabitacion().getCodigo(),
+                    ha.getId_tipoHabitacion().getTipo(),ha.getId_tipoHabitacion().getTipoCama(),ha.getId_tipoHabitacion().getCantCamas(),
+                    ha.getId_tipoHabitacion().getCantPersonasMax(),ha.getId_tipoHabitacion().getPrecioPorNoche()});
             
             }else{JOptionPane.showMessageDialog(null, "hbitacion no existe");}
         }
@@ -398,6 +398,7 @@ public class VistaHabitaciones extends javax.swing.JInternalFrame {
 
     //********Metodo Boton Modificar********* 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        TipoHabitacion th;
         int cel=tblTiposHabitaciones.getSelectedRow();
         //********Consulta que los campos contegan algun valor
         if (txtNroHabitacion.getText().equals("")||txtPiso.getText().equals("")){
@@ -412,7 +413,8 @@ public class VistaHabitaciones extends javax.swing.JInternalFrame {
                 nroHabitacion=Integer.parseInt(txtNroHabitacion.getText());
                 piso=Integer.parseInt(txtPiso.getText());
                 id_tipoHabitacion=(int) tblTiposHabitaciones.getValueAt(cel, 0);
-                Habitacion habitacion=new Habitacion(idHabitacion,nroHabitacion,piso,estado,id_tipoHabitacion);
+                th=new TipoHabitacion(id_tipoHabitacion);
+                Habitacion habitacion=new Habitacion(idHabitacion,nroHabitacion,piso,estado,th);
                 habitacionData.actualizarHabitacion(habitacion);
                 JOptionPane.showMessageDialog(rootPane, "La Habitacion Nro "+nroHabitacion+" se Modifico Correctamente");
                 //*****Limpia el formulario

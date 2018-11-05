@@ -12,43 +12,48 @@ import java.time.LocalDate;
  * @author asus
  */
 public class Reserva {
-    private int id=-1;
+    private int id_Reseva;
     private int cantidadPersonas;
     private LocalDate fechaEntrada;
     private LocalDate fechaSalida;
     private double importeTotal;
     private boolean estadoReserva;
-    private int id_habitacion;
-    private int id_huesped;
+    private LocalDate fechaReserva;
+    private Habitacion habitacio;
+    private Huesped huesped;
 
-    public Reserva(int id, int cantidadPersonas, LocalDate fechaEntrada, LocalDate fechaSalida, double importeTotal, boolean estadoReserva, int id_habitacion, int id_huesped) {
-        this.id = id;
+    public Reserva(int id_Reseva, int cantidadPersonas, LocalDate fechaEntrada, LocalDate fechaSalida, double importeTotal, boolean estadoReserva,LocalDate fr, Habitacion habitacio, Huesped huesped) {
+        this.id_Reseva = id_Reseva;
         this.cantidadPersonas = cantidadPersonas;
         this.fechaEntrada = fechaEntrada;
         this.fechaSalida = fechaSalida;
         this.importeTotal = importeTotal;
         this.estadoReserva = estadoReserva;
-        this.id_habitacion = id_habitacion;
-        this.id_huesped = id_huesped;
+        fechaReserva=fr;
+        this.habitacio = habitacio;
+        this.huesped = huesped;
     }
 
-    public Reserva(int cantidadPersonas, LocalDate fechaEntrada, LocalDate fechaSalida, double importeTotal, boolean estadoReserva, int id_habitacion, int id_huesped) {
-        id = -1;
+    public Reserva(int cantidadPersonas, LocalDate fechaEntrada, LocalDate fechaSalida, double importeTotal, boolean estadoReserva,LocalDate fr, Habitacion habitacio, Huesped huesped) {
         this.cantidadPersonas = cantidadPersonas;
         this.fechaEntrada = fechaEntrada;
         this.fechaSalida = fechaSalida;
         this.importeTotal = importeTotal;
         this.estadoReserva = estadoReserva;
-        this.id_habitacion = id_habitacion;
-        this.id_huesped = id_huesped;
+        fechaReserva=fr;
+        this.habitacio = habitacio;
+        this.huesped = huesped;
     }
 
-    public int getId() {
-        return id;
+    public Reserva() {
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public int getId_Reseva() {
+        return id_Reseva;
+    }
+
+    public void setId_Reseva(int id_Reseva) {
+        this.id_Reseva = id_Reseva;
     }
 
     public int getCantidadPersonas() {
@@ -91,23 +96,29 @@ public class Reserva {
         this.estadoReserva = estadoReserva;
     }
 
-    public int getId_habitacion() {
-        return id_habitacion;
+    public LocalDate getFechaReserva() {
+        return fechaReserva;
     }
 
-    public void setId_habitacion(int id_habitacion) {
-        this.id_habitacion = id_habitacion;
+    public void setFechaReserva(LocalDate fechaReserva) {
+        this.fechaReserva = fechaReserva;
     }
 
-    public int getId_huesped() {
-        return id_huesped;
+    public Habitacion getHabitacio() {
+        return habitacio;
     }
 
-    public void setId_huesped(int id_huesped) {
-        this.id_huesped = id_huesped;
+    public void setHabitacio(Habitacion habitacio) {
+        this.habitacio = habitacio;
     }
 
-    public Reserva() {
+    public Huesped getHuesped() {
+        return huesped;
+    }
+
+    public void setHuesped(Huesped huesped) {
+        this.huesped = huesped;
+    }
+
         
-    }    
  }

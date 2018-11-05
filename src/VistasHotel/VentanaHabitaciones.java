@@ -4,8 +4,6 @@ import hotelidealuno.Conexion;
 import hotelidealuno.Habitacion;
 import hotelidealuno.HabitacionData;
 import hotelidealuno.ModelaTabla;
-import hotelidealuno.TipoHabitacion;
-import hotelidealuno.TipoHabitacionData;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -19,8 +17,6 @@ import javax.swing.table.DefaultTableModel;
 public class VentanaHabitaciones extends javax.swing.JInternalFrame {
     private DefaultTableModel modelo;
     private ArrayList<Habitacion> listaHabitaciones;
-    private ArrayList<TipoHabitacion> listaTipoHabitaciones;
-    private TipoHabitacionData tipoHabitacionData;
     private HabitacionData habitacionData;
     private Conexion conexion;
     public static String tipo;
@@ -31,13 +27,11 @@ public class VentanaHabitaciones extends javax.swing.JInternalFrame {
         try {
             initComponents();
             conexion=new Conexion("jdbc:mysql://localhost/hotelideal1","root","");
-            tipoHabitacionData=new TipoHabitacionData(conexion);
             habitacionData=new HabitacionData(conexion);
             modelo=new DefaultTableModel();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(VentanaHabitaciones.class.getName()).log(Level.SEVERE, null, ex);
         }
-         tablaHabitaciones.setModel(modelo);
         cabezeraTabla();
         borrarFilasTabla();
         cargaDatos();
@@ -63,30 +57,27 @@ public class VentanaHabitaciones extends javax.swing.JInternalFrame {
         tbl.modela(tablaHabitaciones);
     }
     
-        //******Metodo que borra las filas de la tabla******
-        public void borrarFilasTabla(){
-            int a =modelo.getRowCount()-1;
-            for(int i=a;i>=0;i--){
-                modelo.removeRow(i);
-            }
+    //******Metodo que borra las filas de la tabla******
+    public void borrarFilasTabla(){
+        int a =modelo.getRowCount()-1;
+        for(int i=a;i>=0;i--){
+            modelo.removeRow(i);
         }
+    }
 
-        //********Metodo que carga los datos en la tabla********
-        public void cargaDatos(){
-            listaTipoHabitaciones=(ArrayList)tipoHabitacionData.obtenerTipoHabitaciones();
-            listaHabitaciones=(ArrayList)habitacionData.obtenerHabitaciones();
-            borrarFilasTabla();
-            for (Habitacion r:listaHabitaciones){
-                for (TipoHabitacion m:listaTipoHabitaciones){
-                    String estado;
-                        if(r.getId_tipoHabitacion()==m.getId()){
-                            if(r.isEstado()){estado="Libre";}else{estado="Ocupada";}
-                            modelo.addRow(new Object[]{r.getNroHabitacion(),estado,r.getPiso()
-                            ,m.getTipo(),m.getCodigo(),m.getTipoCama(),m.getCantCamas(),m.getCantPersonasMax(),m.getPrecioPorNoche()});
-                        }
-                 }
-            }
+    //********Metodo que carga los datos en la tabla********
+    public void cargaDatos(){
+        listaHabitaciones=(ArrayList)habitacionData.obtenerHabitaciones();
+        borrarFilasTabla();
+        for (Habitacion r:listaHabitaciones){
+            String estado;
+            if(r.isEstado()){estado="Libre";}else{estado="Ocupada";}
+            modelo.addRow(new Object[]{r.getNroHabitacion(),estado,r.getPiso()
+            ,r.getId_tipoHabitacion().getTipo(),r.getId_tipoHabitacion().getCodigo(),
+            r.getId_tipoHabitacion().getTipoCama(),r.getId_tipoHabitacion().getCantCamas(),
+            r.getId_tipoHabitacion().getCantPersonasMax(),r.getId_tipoHabitacion().getPrecioPorNoche()});
         }
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

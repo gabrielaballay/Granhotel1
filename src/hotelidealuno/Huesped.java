@@ -6,12 +6,13 @@ package hotelidealuno;
  */
 public class Huesped {
     //*****Declaracion de todos los atributos de la clase
-    private int id_huesped=-1;
+    private int id_huesped;
     private String nombre;
     private int dni;
     private String domicilio;
     private String correo;
     private long Celular;
+    
     //****Prmer constructor de la clase
     public Huesped(int id, String nombre, int dni, String domicilio, String correo, long Celular) {
         this.id_huesped = id;
@@ -30,6 +31,11 @@ public class Huesped {
         this.correo = correo;
         this.Celular = Celular;
     }
+
+    public Huesped(int id_huesped) {
+        this.id_huesped = id_huesped;
+    }
+    
     //*****Constructor por defecto
     public Huesped() {
         id_huesped=-1;

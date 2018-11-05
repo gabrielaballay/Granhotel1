@@ -46,7 +46,7 @@ public class TipoHabitacionData {
             ResultSet rs = statement.getGeneratedKeys();
 
             if (rs.next()) {
-                tipoHabitacion.setId(rs.getInt(1));
+                tipoHabitacion.setId_tipoHabitacion(rs.getInt(1));
             } else {
                 System.out.println("No se pudo obtener el id luego de insertar un tipoHabitacion");
             }
@@ -68,7 +68,7 @@ public class TipoHabitacionData {
             TipoHabitacion tipoHabitacion;
             while(resultSet.next()){
                 tipoHabitacion = new TipoHabitacion();
-                tipoHabitacion.setId(resultSet.getInt("id_tipohabitacion")); 
+                tipoHabitacion.setId_tipoHabitacion(resultSet.getInt("id_tipohabitacion")); 
                 tipoHabitacion.setCodigo(resultSet.getInt("codigo"));
                 tipoHabitacion.setTipo(resultSet.getString("tipo"));
                 tipoHabitacion.setPrecioPorNoche(resultSet.getDouble("precioPorNoche"));
@@ -121,7 +121,7 @@ public class TipoHabitacionData {
             statement.setInt(4, tipoHabitacion.getCantPersonasMax());
             statement.setInt(5, tipoHabitacion.getCantCamas());
             statement.setString(6, tipoHabitacion.getTipoCama());
-            statement.setInt(7, tipoHabitacion.getId());
+            statement.setInt(7, tipoHabitacion.getId_tipoHabitacion());
             statement.executeUpdate();
     
           
@@ -147,7 +147,7 @@ public class TipoHabitacionData {
             
             while(resultSet.next()){
                 tipoHabitacion = new TipoHabitacion();
-                tipoHabitacion.setId(resultSet.getInt("id_tipohabitacion"));
+                tipoHabitacion.setId_tipoHabitacion(resultSet.getInt("id_tipohabitacion"));
                 tipoHabitacion.setCodigo(resultSet.getInt("codigo"));
                 tipoHabitacion.setTipo(resultSet.getString("tipo"));
                 tipoHabitacion.setPrecioPorNoche(resultSet.getDouble("precioPorNoche"));
@@ -168,5 +168,36 @@ public class TipoHabitacionData {
         
         return tipoHabitacion;
     }
-   
+    
+    //*****Busca un tipo de Habitacion por id*****
+    //********************************************
+    public TipoHabitacion buscarTipoHabita(int id){
+    TipoHabitacion tipoHabitacion=null;
+    try {
+            
+            String sql = "SELECT * FROM tipoHabitacion WHERE id_tipohabitacion = ?;";
+
+            PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            statement.setInt(1, id);
+           
+            ResultSet resultSet=statement.executeQuery();
+            
+            while(resultSet.next()){
+                tipoHabitacion = new TipoHabitacion();
+                tipoHabitacion.setId_tipoHabitacion(resultSet.getInt("id_tipohabitacion"));
+                tipoHabitacion.setCodigo(resultSet.getInt("codigo"));
+                tipoHabitacion.setTipo(resultSet.getString("tipo"));
+                tipoHabitacion.setPrecioPorNoche(resultSet.getDouble("precioPorNoche"));
+                tipoHabitacion.setCantPersonasMax(resultSet.getInt("cantPersonasMax"));
+                tipoHabitacion.setCantCamas(resultSet.getInt("cantCamas"));
+                tipoHabitacion.setTipoCama(resultSet.getString("tipoCama"));
+             
+            }      
+            statement.close();
+ 
+        } catch (SQLException ex) {
+            System.out.println("Error al buscar un tipoHabitacion : " + ex.getMessage());
+        }
+        return tipoHabitacion;
+    }
 }
