@@ -759,7 +759,7 @@ public final class VistaGestionReserva extends javax.swing.JInternalFrame {
     //*****Metodo para limpiar el formulario
     //**************************************
     void limpiar(){
-        txtNombre.setText("");
+        txtNombre.setText(null);
         txtDni.setText("");
         txtDomicilio.setText("");
         txtCorreo.setText("");
