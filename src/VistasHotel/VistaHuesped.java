@@ -85,18 +85,6 @@ public class VistaHuesped extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Correo");
 
-        jtNombre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtNombreActionPerformed(evt);
-            }
-        });
-
-        jtDireccion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtDireccionActionPerformed(evt);
-            }
-        });
-
         jbGuardar.setText("Guardar");
         jbGuardar.setPreferredSize(new java.awt.Dimension(79, 24));
         jbGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -163,20 +151,6 @@ public class VistaHuesped extends javax.swing.JInternalFrame {
             }
         ));
         jHuespes.getTableHeader().setReorderingAllowed(false);
-        jHuespes.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-                jHuespesAncestorMoved(evt);
-            }
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
-        });
-        jHuespes.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jHuespesMouseClicked(evt);
-            }
-        });
         jScrollPane2.setViewportView(jHuespes);
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Registrar Huesped.jpg"))); // NOI18N
@@ -420,21 +394,6 @@ public class VistaHuesped extends javax.swing.JInternalFrame {
         }
 
     }//GEN-LAST:event_button1ActionPerformed
-
-    private void jHuespesAncestorMoved(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jHuespesAncestorMoved
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jHuespesAncestorMoved
-
-    private void jHuespesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jHuespesMouseClicked
-    }//GEN-LAST:event_jHuespesMouseClicked
-
-    private void jtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtNombreActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtNombreActionPerformed
-
-    private void jtDireccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtDireccionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtDireccionActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Button button1;

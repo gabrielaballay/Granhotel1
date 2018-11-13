@@ -18,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class VistaHabitaciones extends javax.swing.JInternalFrame {
     //****Declaracion de los atributos de la clase****
+    private int cantidadHabitaciones;
     private int idHabitacion;
     private int nroHabitacion;
     private int piso;
@@ -27,6 +28,7 @@ public class VistaHabitaciones extends javax.swing.JInternalFrame {
     private HabitacionData habitacionData;
     private Conexion conexion;
     ArrayList<TipoHabitacion> listaTipoHabitaciones;
+    ArrayList<Habitacion> listaHabitaciones;
     DefaultTableModel modelo;
 
     /**
@@ -77,12 +79,17 @@ public class VistaHabitaciones extends javax.swing.JInternalFrame {
         //********Metodo que carga los datos en la tabla********
         public void cargaDatos(String tipo){
             listaTipoHabitaciones=(ArrayList)tipoHabitacionData.obtenerTipoHabitaciones();
+            listaHabitaciones=(ArrayList)habitacionData.obtenerHabitaciones();
             borrarFilasTabla();
             for (TipoHabitacion m:listaTipoHabitaciones){
                 if (m.getTipo().equalsIgnoreCase(tipo)){
                     modelo.addRow(new Object[]{m.getId_tipoHabitacion(),m.getCodigo(),m.getTipo(),m.getTipoCama(),m.getCantCamas(),m.getCantPersonasMax(),m.getPrecioPorNoche()});
                 }
             }
+            for (Habitacion h:listaHabitaciones){
+                cantidadHabitaciones=h.getNroHabitacion()+1;
+            }
+            txtNroHabitacion.setText(cantidadHabitaciones+"");
         }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -120,6 +127,8 @@ public class VistaHabitaciones extends javax.swing.JInternalFrame {
 
         jLabel4.setText("Tipo Habitacion");
 
+        txtNroHabitacion.setEditable(false);
+
         cbxTipoHabitacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Estándar simple", "Doble", "Triple", "Suite Lujo" }));
         cbxTipoHabitacion.setToolTipText("");
         cbxTipoHabitacion.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -131,11 +140,6 @@ public class VistaHabitaciones extends javax.swing.JInternalFrame {
 
         btnGuardar.setText("Guardar");
         btnGuardar.setPreferredSize(new java.awt.Dimension(80, 25));
-        btnGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnGuardarMouseClicked(evt);
-            }
-        });
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
@@ -344,8 +348,8 @@ public class VistaHabitaciones extends javax.swing.JInternalFrame {
                 
                 JOptionPane.showMessageDialog(rootPane, "La Habitacion Nro "+nroHabitacion+" se Guardo Correctamente");
                 //*****Limpia el formulario
-                    txtNroHabitacion.setText("");
                     txtPiso.setText("");
+                    txtNroHabitacion.setText("");
                     chcLibre.setSelected(false);
                     chcOcupada.setSelected(false);
                     cargaDatos("Estándar simple");
@@ -361,10 +365,6 @@ public class VistaHabitaciones extends javax.swing.JInternalFrame {
     private void chcOcupadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chcOcupadaActionPerformed
         chcLibre.setSelected(false);// TODO add your handling code here:
     }//GEN-LAST:event_chcOcupadaActionPerformed
-
-    private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
-
-    }//GEN-LAST:event_btnGuardarMouseClicked
 
     //********** Metodo del Boton Buscar **********
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed

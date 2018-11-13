@@ -1,6 +1,8 @@
 package VistasHotel;
 
 import Imagen.ImagenFondo;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 
@@ -9,6 +11,8 @@ import javax.swing.JInternalFrame;
  * @author Aballay Gabriel
  */
 public class Principal extends javax.swing.JFrame {
+    //private 
+    
     public Principal() {
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);//Hacemos que la ventana principal se maximize
@@ -126,11 +130,6 @@ public class Principal extends javax.swing.JFrame {
                 jMenu4MouseClicked(evt);
             }
         });
-        jMenu4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu4ActionPerformed(evt);
-            }
-        });
         jMenuBar1.add(jMenu4);
 
         setJMenuBar(jMenuBar1);
@@ -181,10 +180,6 @@ public class Principal extends javax.swing.JFrame {
         centrarVentana(vh);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
-    private void jMenu4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu4ActionPerformed
-
-    }//GEN-LAST:event_jMenu4ActionPerformed
-
     private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MouseClicked
         System.exit(0);        // TODO add your handling code here:
     }//GEN-LAST:event_jMenu4MouseClicked
@@ -223,7 +218,17 @@ public class Principal extends javax.swing.JFrame {
             ventana.show();
         }
     }
-
+    
+    public static String fechaDeHoy(){
+        Date fecha=new Date();
+        SimpleDateFormat formatoFecha=new SimpleDateFormat("dd/MM/yyyy");
+        return formatoFecha.format(fecha);
+    }
+    public void controlReservas(){
+        
+        
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

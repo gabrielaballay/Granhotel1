@@ -189,15 +189,6 @@ public final class VistaGestionReserva extends javax.swing.JInternalFrame {
             }
         ));
         tablaGestionReserva.getTableHeader().setReorderingAllowed(false);
-        tablaGestionReserva.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                tablaGestionReservaAncestorAdded(evt);
-            }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
-        });
         jScrollPane1.setViewportView(tablaGestionReserva);
         if (tablaGestionReserva.getColumnModel().getColumnCount() > 0) {
             tablaGestionReserva.getColumnModel().getColumn(0).setMaxWidth(50);
@@ -221,7 +212,7 @@ public final class VistaGestionReserva extends javax.swing.JInternalFrame {
         });
 
         btnCancelarReserva.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        btnCancelarReserva.setText("Cancelar Reserva");
+        btnCancelarReserva.setText("Finalizar Reserva");
         btnCancelarReserva.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnCancelarReserva.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -256,11 +247,6 @@ public final class VistaGestionReserva extends javax.swing.JInternalFrame {
         jLabel9.setText("Importe Total");
 
         txtTotal.setEditable(false);
-        txtTotal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTotalActionPerformed(evt);
-            }
-        });
 
         jLabel10.setText("Fecha Entrada ");
 
@@ -279,11 +265,6 @@ public final class VistaGestionReserva extends javax.swing.JInternalFrame {
         jLabel15.setText("Tipo de Habitacion");
 
         cbxTipoHabitacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar...", "Estándar Simple", "Doble", "Triple", "Suite Lujo", " " }));
-        cbxTipoHabitacion.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                cbxTipoHabitacionMouseClicked(evt);
-            }
-        });
         cbxTipoHabitacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxTipoHabitacionActionPerformed(evt);
@@ -294,21 +275,6 @@ public final class VistaGestionReserva extends javax.swing.JInternalFrame {
 
         txtId.setEditable(false);
         txtId.setInheritsPopupMenu(true);
-        txtId.addContainerListener(new java.awt.event.ContainerAdapter() {
-            public void componentAdded(java.awt.event.ContainerEvent evt) {
-                txtIdComponentAdded(evt);
-            }
-        });
-        txtId.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtIdActionPerformed(evt);
-            }
-        });
-        txtId.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
-            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
-                txtIdVetoableChange(evt);
-            }
-        });
 
         tablaFechas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -349,12 +315,6 @@ public final class VistaGestionReserva extends javax.swing.JInternalFrame {
         btnCargarHuesped.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCargarHuespedActionPerformed(evt);
-            }
-        });
-
-        txtFechaEntrada.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFechaEntradaActionPerformed(evt);
             }
         });
 
@@ -622,30 +582,33 @@ public final class VistaGestionReserva extends javax.swing.JInternalFrame {
     private void txtModificarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtModificarReservaActionPerformed
         Huesped hues;
         Habitacion h;
-        int cel=tablaGestionReserva.getSelectedRow();
-        int celda=tablaFechas.getSelectedRow();
-        if(!(txtNombre.getText().equalsIgnoreCase(""))&&!(tablaFechas.getValueAt(celda,0)==null)){
+        int confirma=JOptionPane.showConfirmDialog(null, "Esta seguro de Modificar\n la Reserva","Confirmar",JOptionPane.OK_CANCEL_OPTION);
+        if(confirma==0){
+            int cel=tablaGestionReserva.getSelectedRow();
+            int celda=tablaFechas.getSelectedRow();
+            if(!(txtNombre.getText().equalsIgnoreCase(""))&&!(tablaFechas.getValueAt(celda,0)==null)){
 
-            int idreser=Integer.parseInt(idReserva.getText());
-            boolean estadoReserva;
-            if (chcActiva.isSelected()){estadoReserva=true;}else{estadoReserva=false;}
-            if (cel>-1){
-                nroHabitacion=Integer.parseInt(String.valueOf(tablaGestionReserva.getValueAt(cel, 0)));
-                Habitacion ha=habitacionData.buscarHabitacion(nroHabitacion);
-                idHabitacion=ha.getIdHabitacion();
-                if(idhues>0 && idHabitacion>0 && !txtFechaEntrada.getText().equals(null)&& !txtFechaSalida.getText().equals(null)){
-                    h=new Habitacion(idHabitacion);
-                    hues=new Huesped(idhues);
-                    LocalDate fechaRe=LocalDate.parse((CharSequence) fechaReserva.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-                    Reserva reserva=new Reserva(idreser,cantPersonas,fechaEntrada,fechaSalida,impTotal,estadoReserva,fechaRe,h,hues);
-                    reservaData.actualizaReserva(reserva);
-                    reservaData.actualizarEstado(false, nroHabitacion);
-                    reservaData.actualizarEstado(true, cambio);
-                    JOptionPane.showMessageDialog(null, "Se creo la reserva en forma correcta!");
-                    limpiar();
-                }else{JOptionPane.showMessageDialog(null, "Debe llenar todos los campos!!!");}
-            }else{JOptionPane.showMessageDialog(null, "Debe Seleccionar una Habitacion de la Lista");}
-        }else{JOptionPane.showMessageDialog(null, "Debe cargar una Reserva \npara poder Modificarla!!!","Atencion!!!",JOptionPane.WARNING_MESSAGE);}       
+                int idreser=Integer.parseInt(idReserva.getText());
+                boolean estadoReserva;
+                if (chcActiva.isSelected()){estadoReserva=true;}else{estadoReserva=false;}
+                if (cel>-1){
+                    nroHabitacion=Integer.parseInt(String.valueOf(tablaGestionReserva.getValueAt(cel, 0)));
+                    Habitacion ha=habitacionData.buscarHabitacion(nroHabitacion);
+                    idHabitacion=ha.getIdHabitacion();
+                    if(idhues>0 && idHabitacion>0 && !txtFechaEntrada.getText().equals(null)&& !txtFechaSalida.getText().equals(null)){
+                        h=new Habitacion(idHabitacion);
+                        hues=new Huesped(idhues);
+                        LocalDate fechaRe=LocalDate.parse((CharSequence)fechaReserva.getText(), DateTimeFormatter.ISO_DATE);//((CharSequence) fechaReserva.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                        Reserva reserva=new Reserva(idreser,cantPersonas,fechaEntrada,fechaSalida,impTotal,estadoReserva,fechaRe,h,hues);
+                        reservaData.actualizaReserva(reserva);
+                        reservaData.actualizarEstado(false, nroHabitacion);
+                        reservaData.actualizarEstado(true, cambio);
+                        JOptionPane.showMessageDialog(null, "Se creo la reserva en forma correcta!");
+                        limpiar();
+                    }else{JOptionPane.showMessageDialog(null, "Debe llenar todos los campos!!!");}
+                }else{JOptionPane.showMessageDialog(null, "Debe Seleccionar una Habitacion de la Lista");}
+            }else{JOptionPane.showMessageDialog(null, "Debe cargar una Reserva \npara poder Modificarla!!!","Atencion!!!",JOptionPane.WARNING_MESSAGE);}
+        }
     }//GEN-LAST:event_txtModificarReservaActionPerformed
     
     //*****Combo Box ******
@@ -660,6 +623,7 @@ public final class VistaGestionReserva extends javax.swing.JInternalFrame {
             cargaHabitaciones(tipo);
         }else{
             cbxTipoHabitacion.setSelectedIndex(0);
+            JOptionPane.showMessageDialog(null,"Seleccione una Habitacion de la tabla!!!","ATENCION",JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_cbxTipoHabitacionActionPerformed
 
@@ -672,16 +636,6 @@ public final class VistaGestionReserva extends javax.swing.JInternalFrame {
             fechaelejida=LocalDate.parse((CharSequence)fec, DateTimeFormatter.ISO_DATE);
             cargaDatos();
     }//GEN-LAST:event_tablaFechasMouseClicked
-
-    //*metodos sin funcionalidad
-    private void txtIdComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_txtIdComponentAdded
-    }//GEN-LAST:event_txtIdComponentAdded
-
-    private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
-    }//GEN-LAST:event_txtIdActionPerformed
-
-    private void txtIdVetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {//GEN-FIRST:event_txtIdVetoableChange
-    }//GEN-LAST:event_txtIdVetoableChange
 
     //*******Boton para cargar un huesped *****
     //*****************************************
@@ -699,16 +653,6 @@ public final class VistaGestionReserva extends javax.swing.JInternalFrame {
         VentanaDatosHuesped.buscarInforme.setVisible(false);
         cargaDatos();
     }//GEN-LAST:event_btnCargarHuespedActionPerformed
-
-    private void tablaGestionReservaAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tablaGestionReservaAncestorAdded
-        
-    }//GEN-LAST:event_tablaGestionReservaAncestorAdded
-
-    private void txtTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalActionPerformed
-    }//GEN-LAST:event_txtTotalActionPerformed
-
-    private void txtFechaEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaEntradaActionPerformed
-    }//GEN-LAST:event_txtFechaEntradaActionPerformed
 
     //****Boton para calcular el nuevo importe para la modificacion de la reserva****
     //*******************************************************************************
@@ -752,9 +696,6 @@ public final class VistaGestionReserva extends javax.swing.JInternalFrame {
             Logger.getLogger(VistaGestionReserva.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void cbxTipoHabitacionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbxTipoHabitacionMouseClicked
-    }//GEN-LAST:event_cbxTipoHabitacionMouseClicked
     
     //*****Metodo para limpiar el formulario
     //**************************************

@@ -30,7 +30,6 @@ public class HabitacionData {
     //*******************************************************
     public void guardarHabitacion(Habitacion habitacion){
         try {
-            JOptionPane.showMessageDialog(null, habitacion.getId_tipoHabitacion().getId_tipoHabitacion());
             String sql = "INSERT INTO habitacion ( nroHabitacion , piso, estado , id_tipohabitacion )"
                     + " VALUES ( ? , ? , ? , ? );";
 

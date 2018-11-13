@@ -197,11 +197,6 @@ public class VistaTipoHabitacion extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(tblTiposHabitaciones);
 
         txtcodigo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
-        txtcodigo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtcodigoActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -391,10 +386,6 @@ public class VistaTipoHabitacion extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         txtcantidad_personas.transferFocus();
     }//GEN-LAST:event_txtcantidad_personasActionPerformed
-
-    private void txtcodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcodigoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtcodigoActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnactualizar;
