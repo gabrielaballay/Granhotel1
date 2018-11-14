@@ -208,7 +208,8 @@ public class VentanaDatosHuesped extends javax.swing.JInternalFrame {
                 .addGap(10, 10, 10)
                 .addComponent(etiquetaSeleccione)
                 .addGap(5, 5, 5)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         getAccessibleContext().setAccessibleDescription("VantanaDatosHuesped");

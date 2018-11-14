@@ -27,7 +27,7 @@ public class VistaReserva extends javax.swing.JInternalFrame {
     private int idHabitacion;
     private int idHuesped;
     private int cantPersona;
-    private int valor;
+    private int valor;//verifica si hay habitaciones de un tipo
     private int nroHabitacion;
     private LocalDate fechaEntrada;
     private LocalDate fechaSalida;
@@ -80,7 +80,7 @@ public class VistaReserva extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         txtFechaEntrada = new javax.swing.JFormattedTextField();
         txtFechaSalida = new javax.swing.JFormattedTextField();
-        jButton1 = new javax.swing.JButton();
+        sumaImporte = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         fechaReserva = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -191,18 +191,20 @@ public class VistaReserva extends javax.swing.JInternalFrame {
             ex.printStackTrace();
         }
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 0, 0));
-        jButton1.setText("Presione para Calcular Importe");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        sumaImporte.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        sumaImporte.setForeground(new java.awt.Color(255, 0, 0));
+        sumaImporte.setText("Presione para Calcular Importe");
+        sumaImporte.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                sumaImporteActionPerformed(evt);
             }
         });
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 3, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 0, 0));
         jLabel3.setText("Seleccione una Habitacion.....");
+
+        fechaReserva.setEditable(false);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(49, 145, 49));
@@ -339,7 +341,7 @@ public class VistaReserva extends javax.swing.JInternalFrame {
                 .addGap(170, 170, 170)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(sumaImporte)
                         .addGap(18, 18, 18)
                         .addComponent(txtImporteTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
@@ -398,7 +400,7 @@ public class VistaReserva extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(sumaImporte, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtImporteTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -520,7 +522,7 @@ public class VistaReserva extends javax.swing.JInternalFrame {
         Habitacion h;
         Huesped hues;
         int cel=tblTiposHabitaciones.getSelectedRow();
-        if (chcActiva.isSelected()){estadoReserva=true;}else{estadoReserva=false;}
+        //if (chcActiva.isSelected()){estadoReserva=true;}else{estadoReserva=false;}
         if (cel>-1){
             if(idHuesped>0 && idHabitacion>0 && !txtFechaEntrada.getText().equals(null)&& !txtFechaSalida.getText().equals(null)){
                 Habitacion ha=habitacionData.buscarHabitacion(nroHabitacion);
@@ -528,7 +530,7 @@ public class VistaReserva extends javax.swing.JInternalFrame {
                 h=new Habitacion(idHabitacion);
                 hues=new Huesped(idHuesped);
                 LocalDate fechaRe=LocalDate.parse((CharSequence) fechaReserva.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-                Reserva reserva=new Reserva(cantPersona,fechaEntrada,fechaSalida,impTotal,estadoReserva,fechaRe,h,hues);
+                Reserva reserva=new Reserva(cantPersona,fechaEntrada,fechaSalida,impTotal,chcActiva.isSelected(),fechaRe,h,hues);
                 reservaData.guardarReserva(reserva);
                 int num=Integer.parseInt(String.valueOf(tblTiposHabitaciones.getValueAt(cel, 0)));
                 reservaData.actualizarEstado(false, num);
@@ -539,7 +541,7 @@ public class VistaReserva extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnGuardarReservaActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void sumaImporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sumaImporteActionPerformed
         int suma=0;
         int cel=tblTiposHabitaciones.getSelectedRow();
         cantPersona=(int)sprCantidad.getValue();
@@ -551,8 +553,8 @@ public class VistaReserva extends javax.swing.JInternalFrame {
             impTotal=  (double) tblTiposHabitaciones.getValueAt(cel, 8)*suma;
             nroHabitacion=(int) tblTiposHabitaciones.getValueAt(cel, 0);
             txtImporteTotal.setText(impTotal+"");
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
+        }else{JOptionPane.showMessageDialog(null, "Debe Seleccionar una \nHabitacion de la Lista","Atencion",JOptionPane.WARNING_MESSAGE);}
+    }//GEN-LAST:event_sumaImporteActionPerformed
 
     private void sprCantidadStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sprCantidadStateChanged
         cbxTipoHabitacion.setSelectedIndex(0);
@@ -587,7 +589,6 @@ public class VistaReserva extends javax.swing.JInternalFrame {
     private javax.swing.JCheckBox chcActiva;
     private javax.swing.JCheckBox chcInactiva;
     private javax.swing.JTextField fechaReserva;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -605,6 +606,7 @@ public class VistaReserva extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSpinner sprCantidad;
+    private javax.swing.JButton sumaImporte;
     private javax.swing.JTable tblTiposHabitaciones;
     public static javax.swing.JTextField txtCelular;
     public static javax.swing.JTextField txtCorreo;

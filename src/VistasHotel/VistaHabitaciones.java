@@ -89,6 +89,10 @@ public class VistaHabitaciones extends javax.swing.JInternalFrame {
             for (Habitacion h:listaHabitaciones){
                 cantidadHabitaciones=h.getNroHabitacion()+1;
             }
+            if (cantidadHabitaciones==0){
+                cantidadHabitaciones=1;
+                JOptionPane.showMessageDialog(null, cantidadHabitaciones+"");
+            }
             txtNroHabitacion.setText(cantidadHabitaciones+"");
         }
     @SuppressWarnings("unchecked")
