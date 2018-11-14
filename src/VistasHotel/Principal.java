@@ -1,22 +1,42 @@
 package VistasHotel;
 
 import Imagen.ImagenFondo;
+import hotelidealuno.Conexion;
+import hotelidealuno.Reserva;
+import hotelidealuno.ReservaData;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Aballay Gabriel
  */
 public class Principal extends javax.swing.JFrame {
-    //private 
+    private LocalDate fechaCompara;
+    private ReservaData reservaData;
+    private Conexion conexion;
+    private ArrayList<Reserva> listaReserva;
     
     public Principal() {
-        initComponents();
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);//Hacemos que la ventana principal se maximize
-        escritorio.setBorder(new ImagenFondo());//Insertamos una imagen en el escritorio
+        try {
+            initComponents();
+            conexion=new Conexion ("jdbc:mysql://localhost/hotelideal1","root","");
+            reservaData=new ReservaData(conexion);
+            this.setExtendedState(JFrame.MAXIMIZED_BOTH);//Hacemos que la ventana principal se maximize
+            escritorio.setBorder(new ImagenFondo());//Insertamos una imagen en el escritorio
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -154,6 +174,7 @@ public class Principal extends javax.swing.JFrame {
         escritorio.repaint();
         VistaHuesped vhd=new VistaHuesped();
         centrarVentana(vhd);
+        fechaDeHoy();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
     //*********Llamado a la vista de Tipos de Habitacion********************
     //**********************************************************************
@@ -162,6 +183,7 @@ public class Principal extends javax.swing.JFrame {
         escritorio.repaint();
         VistaTipoHabitacion vth=new VistaTipoHabitacion();
         centrarVentana(vth);
+        fechaDeHoy();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
     //*********Llamado a la vista de Reservas*******************************
     //**********************************************************************
@@ -170,6 +192,7 @@ public class Principal extends javax.swing.JFrame {
         escritorio.repaint();
         VistaReserva vr=new VistaReserva();
         centrarVentana(vr);
+        fechaDeHoy();
     }//GEN-LAST:event_jMenuItem4ActionPerformed
     //*********Llamado a la vista de las Habitaciones***********************
     //**********************************************************************
@@ -178,6 +201,7 @@ public class Principal extends javax.swing.JFrame {
         escritorio.repaint();
         VistaHabitaciones vh=new VistaHabitaciones();
         centrarVentana(vh);
+        fechaDeHoy();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MouseClicked
@@ -190,6 +214,7 @@ public class Principal extends javax.swing.JFrame {
         escritorio.repaint();
         VistaGestionReserva vgr=new VistaGestionReserva();
         centrarVentana(vgr);
+        fechaDeHoy();
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
@@ -197,6 +222,7 @@ public class Principal extends javax.swing.JFrame {
         escritorio.repaint();
         VentanaHabitaciones vlh=new VentanaHabitaciones();
         centrarVentana(vlh);
+        fechaDeHoy();
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
@@ -204,6 +230,7 @@ public class Principal extends javax.swing.JFrame {
         escritorio.repaint();
         VistaInforme vi=new VistaInforme();
         centrarVentana(vi);// TODO add your handling code here:
+        fechaDeHoy();
     }//GEN-LAST:event_jMenuItem8ActionPerformed
     //********Metodo para centrar todos los internalframe del proyecto**********
     //**************************************************************************
@@ -219,14 +246,27 @@ public class Principal extends javax.swing.JFrame {
         }
     }
     
-    public static String fechaDeHoy(){
+    public void fechaDeHoy(){
+        listaReserva=(ArrayList)reservaData.obtenerResevas();
+        int suma = 0,suma2=0;
         Date fecha=new Date();
-        SimpleDateFormat formatoFecha=new SimpleDateFormat("dd/MM/yyyy");
-        return formatoFecha.format(fecha);
-    }
-    public void controlReservas(){
-        
-        
+        SimpleDateFormat formatoFecha=new SimpleDateFormat("yyyy/MM/dd");
+        String f = formatoFecha.format(fecha);
+        fechaCompara=LocalDate.parse(f, DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+        for(Reserva r:listaReserva){
+            if(r.getFechaSalida().getDayOfYear()<fechaCompara.getDayOfYear()){
+                suma++;
+            }
+            else if(r.getFechaSalida().getDayOfYear()==fechaCompara.getDayOfYear()){
+                suma2++;
+            }
+        }
+        if(suma>=1){
+            JOptionPane.showMessageDialog(null, "Hay "+suma+" reservas Vencidas,\n verifique el sistema","ATENCION", JOptionPane.INFORMATION_MESSAGE);
+        }
+        if(suma2>=1){
+            JOptionPane.showMessageDialog(null, "Hoy Vence "+suma2+" reserva(s)","ATENCION", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
     
     public static void main(String args[]) {
@@ -259,6 +299,7 @@ public class Principal extends javax.swing.JFrame {
                 new Principal().setVisible(true);
             }
         });
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

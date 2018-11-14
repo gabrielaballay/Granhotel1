@@ -618,7 +618,6 @@ public final class VistaGestionReserva extends javax.swing.JInternalFrame {
         int cel=tablaGestionReserva.getSelectedRow();
         if(cel >-1){
             cambio=(int) tablaGestionReserva.getValueAt(cel, 0);
-            JOptionPane.showMessageDialog(null, cambio);
             limpiarTabla();
             cargaHabitaciones(tipo);
         }else{
